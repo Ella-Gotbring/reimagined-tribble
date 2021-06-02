@@ -1,7 +1,13 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-  
+   <router-link :to="{name: 'Reg'}">
+    <img alt="shui logo" src="../assets/shuilogo.jpg">
+  </router-link>
+  <footer>
+     <img alt="water logo" src="../assets/bottomlogo.jpg">
+
+  </footer>
+   
   </div>
 </template>
 
@@ -14,3 +20,4 @@ export default {
   
 }
 </script>
+

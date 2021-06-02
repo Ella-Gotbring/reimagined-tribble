@@ -11,4 +11,93 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const User = require('./models/User.js');
+const Tags = require('./models/Tag');
+const Flow = require('./models/Flow')
+
+const { verify } = require('./auth');
+
+
+
+app.get('/users', (request, response) => {
+	db.find({}, (error, users) => {
+		response.send(users)
+	})
+})
+
+app.get('/users/:id', (request, response) => {
+	
+
+})
+
+app.put('/users/:id', (request, response) => {
+
+})
+
+app.delete('/users/:id', (request, response) => {
+
+})
+
+app.post('/users', (request, response) => {
+
+})
+app.post('/api/register', async (request, response) => {
+	const user = await User.register(request.body);
+
+	if (user) {
+		response.status(201).json(user);
+	} else {
+		response.status(500).json({ error: "Something went wrong registering user " })
+	}
+})
+
+app.post('/api/login', async (request, response) => {
+	const user = await User.auth(request.body);
+
+	if (user) {
+		response.json(user);
+	} else {
+		response.send("Login failed")
+	}
+})
+
+app.get('/api/tags', verify, async (req, res) => {
+	const tags = await Tags.getAllTags(req.user.userID)
+	if (tags) {
+		res.json(tags)
+		return
+	}
+	res.status(401).json({ error: 'Couldnt get resources' })
+})
+
+app.get('/api/flow', verify, async (request, response) => {
+	const flowItems = await Flow.insertPlaceholderFlows({})
+
+	if (flowItems) {
+		response.json(flowItems)
+	} else {
+		response.status(401).json({ error: 'Couldnt get resources' })
+	}
+})
+
+app.post('/api/tags', verify, async (req, res) => {
+	const tags = await Tags.insertedTags(req.body, req.user.userID)
+	if (tags) {
+		res.json({ message: 'Banan' })
+		return
+	}
+	res.status(401).json({ error: 'Couldnt get resources' })
+})
+
+
+app.delete('/api/user', verify, async (req, res) => {
+	const tags = await User.deleteUser(req.user.userID)
+	if (tags) {
+		res.json({ message: 'User Removed' })
+		return
+	}
+	res.status(401).json({ error: 'Couldnt get resources' })
+})
+
+
 app.listen(3000)
