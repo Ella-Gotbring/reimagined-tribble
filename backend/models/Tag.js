@@ -18,7 +18,7 @@ module.exports = {
 			content: cryptr.encrypt(body.content)
 		})
 	},
-	async getAllTags(userID) {
+	async getTags(userID) {
 		const tags = await tagsDB.find({ userID })
 		return tags.map(tag => {
 			const tagObj = {

@@ -9,7 +9,7 @@ module.exports = {
 			req.user = verify;
 			next();
 		} catch (fail) {
-			res.status(401).json({ error: "Unauthorized" });
+			res.status(404).json({ error: "you are unauthorized" });
 		}
 	}
 };

@@ -10,14 +10,14 @@ const streams = new Datastore({
 
 module.exports = {
  async insertPlaceholderFlows() {
-	const coolstreams = await streams.find({})
+	const decstreams = await streams.find({})
 
-		coolstreams.forEach(stream => {
+		decstreams.forEach(stream => {
 			stream.date = cryptr.decrypt(stream.date)
 			stream.tags = cryptr.decrypt(stream.tags)
 			stream.content = cryptr.decrypt(stream.content)
 		})
 
-		return coolstreams
+		return decstreams
 	}
 } 

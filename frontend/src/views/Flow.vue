@@ -18,9 +18,9 @@
 <script>
 import axios from  "axios";
 export default {
- name: "Flow",
- async created() {
-  const res = await axios.get("http://localhost:3000/api/flow");
+    name: "Flow",
+    async created() {
+    const res = await axios.get("http://localhost:3000/api/flow");
     this.streams = res.data;
     console.log(res.data);
   },
